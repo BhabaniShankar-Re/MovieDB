@@ -31,7 +31,6 @@ class MovieListController: UIViewController {
                 self.dataSource.sortMovielist(by: .topRated)
             })
         ])
-        
       
     }
     

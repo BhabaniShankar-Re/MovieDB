@@ -8,7 +8,7 @@
 import XCTest
 @testable import MovieDB
 
-class MovieDBTests: XCTestCase {
+class ConfigurationTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,8 +19,23 @@ class MovieDBTests: XCTestCase {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let genre = Configuraition.genreName(of: 14)
+        XCTAssertNotEqual(genre, "Action")
+    }
+    
+    func testExampleOne() throws {
+        let genre = Configuraition.genreName(of: 21)
+        XCTAssertNil(genre)
+    }
+    
+    func testExampleTwo() throws {
+        let genre = Configuraition.genreName(of: 14)
+        XCTAssertEqual(genre, "Fantasy")
+    }
+    
+    func testExampleThree() throws {
+        let genres = Configuraition.genreNames(of: [14, 80, 10749])
+        XCTAssertEqual(genres, "Crime, Fantasy, Romance")
     }
 
     func testPerformanceExample() throws {

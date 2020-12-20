@@ -23,13 +23,13 @@ struct Configuraition: Decodable {
     static func genreNames(of ids: [Int]) -> String {
         var findGenres = genres.reduce("") { (result, genre) -> String in
             if ids.contains(genre.id) {
-                return (result + " \(genre.name),")
+                return (result + "\(genre.name), ")
             }else { return result }
         }
         if findGenres.isEmpty {
             return ""
         }else {
-            findGenres.removeLast()
+            findGenres.removeLast(2)
             return findGenres
         }
     }
