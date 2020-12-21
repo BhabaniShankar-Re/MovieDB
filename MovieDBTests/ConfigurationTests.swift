@@ -42,6 +42,7 @@ class ConfigurationTests: XCTestCase {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
+            let _ = Configuraition.genreNames(of: [14, 80, 10749])
         }
     }
 

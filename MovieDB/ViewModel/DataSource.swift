@@ -57,11 +57,11 @@ class DataSource {
     func sortMovielist(by type: SortType) {
         switch type {
         case .mostPopular:
-            _movieList = _movieList.sorted(by: {
+            movieList = movieList.sorted(by: {
                 $0.popularity > $1.popularity
             })
         case .topRated:
-            _movieList = _movieList.sorted(by: {
+            movieList = movieList.sorted(by: {
                 $0.rating > $1.rating
             })
         }

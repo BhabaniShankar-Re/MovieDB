@@ -33,7 +33,7 @@ class MovieDetailsViewController: UIViewController {
     
     func subHeadingText() -> String {
         let genreString = Configuraition.genreNames(of: movieDetails.genres)
-        return "\(movieDetails.releaseDate) (\(movieDetails.language.uppercased())) \n \(genreString)"
+        return "\(movieDetails.releaseDate) (\(movieDetails.language.uppercased())) \n\(genreString)"
     }
     
 

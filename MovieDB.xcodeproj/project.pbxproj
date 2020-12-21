@@ -23,6 +23,7 @@
 		008ACDC5258E6B5A0011C4F9 /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 008ACDC3258E6B5A0011C4F9 /* MovieCell.xib */; };
 		008ACDD0258E7BAE0011C4F9 /* Configuraition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008ACDCF258E7BAE0011C4F9 /* Configuraition.swift */; };
 		008ACDD9258EB1BA0011C4F9 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008ACDD8258EB1BA0011C4F9 /* ImageDownloader.swift */; };
+		00AB12CB258FB3F50087B427 /* DataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB12CA258FB3F50087B427 /* DataSourceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		008ACDC3258E6B5A0011C4F9 /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		008ACDCF258E7BAE0011C4F9 /* Configuraition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuraition.swift; sourceTree = "<group>"; };
 		008ACDD8258EB1BA0011C4F9 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		00AB12CA258FB3F50087B427 /* DataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				008ACD84258E3AC20011C4F9 /* ConfigurationTests.swift */,
+				00AB12CA258FB3F50087B427 /* DataSourceTests.swift */,
 				008ACD86258E3AC20011C4F9 /* Info.plist */,
 			);
 			path = MovieDBTests;
@@ -348,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00AB12CB258FB3F50087B427 /* DataSourceTests.swift in Sources */,
 				008ACD85258E3AC20011C4F9 /* ConfigurationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
