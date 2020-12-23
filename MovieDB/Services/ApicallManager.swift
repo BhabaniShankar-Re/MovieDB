@@ -13,9 +13,12 @@ class ApiCallManager {
     private init() { }
     
     static func configure() {
-        _manager.configure() { }
-        _manager.getGenreList { (genres) in
-            Configuraition.genres = genres
+        
+        DispatchQueue.global().sync {
+            _manager.configure()
+            _manager.getGenreList() { genres in
+                Configuraition.genres = genres
+            }
         }
     }
     
@@ -59,24 +62,36 @@ class ApiCallManager {
         case poster, thumbnail
     }
     
-    func configure(_ onFinish: @escaping () -> Void) {
+    func configure() {
         var urlComponent = URLComponents(string: "https://api.themoviedb.org/3/configuration")!
         urlComponent.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         
-        URLSession.shared.dataTaskPublisher(for: urlComponent.url!)
-            .tryMap { (data, response) -> Data in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { throw URLError(.badServerResponse) }
-                return data
-            }
-            .decode(type: Configuraition.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { print("complete with \($0)"); onFinish() }, receiveValue: { [weak self] config in
-                self?.supportedLogoSizes = config.imageConfig.thumbnailSizes
-                self?.supportedPosterSizes = config.imageConfig.posterSizes
-                self?.imageBaseUrl = config.imageConfig.imagesBaseUrl
-                onFinish()
-            })
-            .store(in: &cancelables)
+        guard let rawData = try? Data(contentsOf: urlComponent.url!) else {
+            fatalError("Image source must required to download image")
+        }
+        do {
+            let configData = try JSONDecoder().decode(Configuraition.self, from: rawData)
+            supportedLogoSizes = configData.imageConfig.thumbnailSizes
+            supportedPosterSizes = configData.imageConfig.posterSizes
+            imageBaseUrl = configData.imageConfig.imagesBaseUrl
+        }catch { print(error.localizedDescription) }
+        
+        
+        
+//        URLSession.shared.dataTaskPublisher(for: urlComponent.url!)
+//            .tryMap { (data, response) -> Data in
+//                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { throw URLError(.badServerResponse) }
+//                return data
+//            }
+//            .decode(type: Configuraition.self, decoder: JSONDecoder())
+//            .receive(on: DispatchQueue.main)
+//            .sink(receiveCompletion: { print("complete with \($0)"); onFinish() }, receiveValue: { [weak self] config in
+//                self?.supportedLogoSizes = config.imageConfig.thumbnailSizes
+//                self?.supportedPosterSizes = config.imageConfig.posterSizes
+//                self?.imageBaseUrl = config.imageConfig.imagesBaseUrl
+//                onFinish()
+//            })
+//            .store(in: &cancelables)
         
     }
     
@@ -97,24 +112,30 @@ class ApiCallManager {
             .store(in: &cancelables)
     }
     
-    func getGenreList(_ completion: @escaping (_ genres: [MovieGenre]) -> Void) {
+    func getGenreList(_ completion: (_ genre: [MovieGenre]) -> Void) {
         var urlComponents = URLComponents(string: "https://api.themoviedb.org/3/genre/movie/list")!
         urlComponents.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
         
-        URLSession.shared.dataTaskPublisher(for: urlComponents.url!)
-            .tryMap { (data, response) -> Data in
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { throw URLError(.badServerResponse) }
-                return data
-            }
-            .decode(type: [String: [MovieGenre]].self, decoder: JSONDecoder())
-            .sink( receiveCompletion: {
-                print("completion value \($0)")
-            }, receiveValue: { genrelist in
-                if let genres = genrelist["genres"] {
-                    completion(genres)
-                }
-            })
-            .store(in: &cancelables)
+        guard let rawData = try? Data(contentsOf: urlComponents.url!) else { return }
+        do {
+            let genresList = try JSONDecoder().decode([String: [MovieGenre]].self, from: rawData)
+            completion(genresList["genres"]!)
+        }catch { print(error.localizedDescription) }
+        
+//        URLSession.shared.dataTaskPublisher(for: urlComponents.url!)
+//            .tryMap { (data, response) -> Data in
+//                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { throw URLError(.badServerResponse) }
+//                return data
+//            }
+//            .decode(type: [String: [MovieGenre]].self, decoder: JSONDecoder())
+//            .sink( receiveCompletion: {
+//                print("completion value \($0)")
+//            }, receiveValue: { genrelist in
+//                if let genres = genrelist["genres"] {
+//                    completion(genres)
+//                }
+//            })
+//            .store(in: &cancelables)
         
     }
     

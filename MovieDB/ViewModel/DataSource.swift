@@ -90,9 +90,9 @@ class DataSource {
             guard let strongSelf = self else { return }
             if let data = dataModel {
                 if strongSelf.movieList.isEmpty {
-                    strongSelf._movieList = data.movieList
+                    strongSelf.movieList = data.movieList
                 }else {
-                    strongSelf._movieList.append(contentsOf: data.movieList)
+                    strongSelf.movieList.append(contentsOf: data.movieList)
                 }
                 strongSelf.currentPage = data.page
                 strongSelf.totalPage = data.totalPages
